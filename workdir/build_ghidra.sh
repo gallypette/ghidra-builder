@@ -8,7 +8,7 @@ rm -rf $OUTPUT_DIR || true
 mkdir -p $OUTPUT_DIR
 
 if [ ! -d "ghidra" ]; then
-    git clone https://github.com/NationalSecurityAgency/ghidra
+    git clone https://github.com/NationalSecurityAgency/ghidra -b debugger
 fi
 
 ln -s $HOME/ghidra.bin ghidra.bin # hack
@@ -17,6 +17,8 @@ cd $START_DIR/ghidra
 gradle --init-script gradle/support/fetchDependencies.gradle init
 gradle yajswDevUnpack
 gradle buildGhidra
+gradle prepDev
+gradle eclipse -PeclipsePDE
 
 # Tests
 # Xvfb :99 -nolisten tcp & export DISPLAY=:99
